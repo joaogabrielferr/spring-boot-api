@@ -32,8 +32,8 @@ public class TestConfig implements CommandLineRunner {
 		User user1 = new User(null,"fulano","fulano@gmail.com","999999999","123");
 		User user2 = new User(null,"beltrano","beltrano@gmail.com","999999999","123");
 		
-		Order o1 = new Order(null,Instant.now(),user1,OrderStatus.SHIPED);
-		Order o2 = new Order(null,Instant.now(),user2,OrderStatus.SHIPED);
+		Order o1 = new Order(null,Instant.now(),user1,OrderStatus.SHIPPED);
+		Order o2 = new Order(null,Instant.now(),user2,OrderStatus.SHIPPED);
 		
 		userRepository.saveAll(Arrays.asList(user1,user2));
 		orderRepository.saveAll(Arrays.asList(o1,o2));
