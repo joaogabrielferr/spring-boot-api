@@ -39,12 +39,7 @@ public class TestConfig implements CommandLineRunner {
 		//overriding method from CommandLineRunner interface
 		//this function runs right after applications starts
 		
-		User user1 = new User(null,"fulano","fulano@gmail.com","999999999","123");
-		User user2 = new User(null,"beltrano","beltrano@gmail.com","999999999","123");
-		
-		Order o1 = new Order(null,Instant.now(),user1,OrderStatus.SHIPPED);
-		Order o2 = new Order(null,Instant.now(),user2,OrderStatus.SHIPPED);
-		
+
 		Category c1 = new Category(null,"Electronics");
 		Category c2 = new Category(null,"Books");
 		
@@ -52,10 +47,28 @@ public class TestConfig implements CommandLineRunner {
 		Product p2 = new Product(null,"1984","bla bla bla",45.0,"");
 		Product p3 = new Product(null,"LapTop","bla bla bla",1000.0,"");
 		
-		userRepository.saveAll(Arrays.asList(user1,user2));
-		orderRepository.saveAll(Arrays.asList(o1,o2));
 		categoryRepository.saveAll(Arrays.asList(c1,c2));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+		
+		p1.getCategories().add(c1);
+		p2.getCategories().add(c2);
+		p3.getCategories().add(c2);
+		p3.getCategories().add(c1);
+		
+		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+		
+		
+		User user1 = new User(null,"fulano","fulano@gmail.com","999999999","123");
+		User user2 = new User(null,"beltrano","beltrano@gmail.com","999999999","123");
+		
+		Order o1 = new Order(null,Instant.now(),user1,OrderStatus.SHIPPED);
+		Order o2 = new Order(null,Instant.now(),user2,OrderStatus.SHIPPED);
+		
+
+		
+		userRepository.saveAll(Arrays.asList(user1,user2));
+		orderRepository.saveAll(Arrays.asList(o1,o2));
+
 	}
 	
 		
