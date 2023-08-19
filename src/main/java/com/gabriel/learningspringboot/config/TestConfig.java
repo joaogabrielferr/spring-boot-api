@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.gabriel.learningspringboot.entities.Category;
 import com.gabriel.learningspringboot.entities.Order;
+import com.gabriel.learningspringboot.entities.OrderItem;
 import com.gabriel.learningspringboot.entities.Product;
 import com.gabriel.learningspringboot.entities.User;
 import com.gabriel.learningspringboot.entities.enums.OrderStatus;
 import com.gabriel.learningspringboot.repository.CategoryRepository;
+import com.gabriel.learningspringboot.repository.OrderItemRepository;
 import com.gabriel.learningspringboot.repository.OrderRepository;
 import com.gabriel.learningspringboot.repository.ProductRepository;
 import com.gabriel.learningspringboot.repository.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -68,6 +73,14 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(user1,user2));
 		orderRepository.saveAll(Arrays.asList(o1,o2));
+		
+		OrderItem oi1 = new OrderItem(o1,p1,2,1000.0);
+		OrderItem oi2 = new OrderItem(o1,p3,1,8000.0);
+		OrderItem oi3 = new OrderItem(o2,p2,5,25000.0);
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
+		
+		
 
 	}
 	
