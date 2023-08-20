@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.gabriel.learningspringboot.entities.Category;
 import com.gabriel.learningspringboot.entities.Order;
 import com.gabriel.learningspringboot.entities.OrderItem;
+import com.gabriel.learningspringboot.entities.Payment;
 import com.gabriel.learningspringboot.entities.Product;
 import com.gabriel.learningspringboot.entities.User;
 import com.gabriel.learningspringboot.entities.enums.OrderStatus;
@@ -66,7 +67,7 @@ public class TestConfig implements CommandLineRunner {
 		User user1 = new User(null,"fulano","fulano@gmail.com","999999999","123");
 		User user2 = new User(null,"beltrano","beltrano@gmail.com","999999999","123");
 		
-		Order o1 = new Order(null,Instant.now(),user1,OrderStatus.SHIPPED);
+		Order o1 = new Order(null,Instant.now(),user1,OrderStatus.PAID);
 		Order o2 = new Order(null,Instant.now(),user2,OrderStatus.SHIPPED);
 		
 
@@ -80,7 +81,11 @@ public class TestConfig implements CommandLineRunner {
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
 		
+		Payment payment1 = new Payment(null,Instant.now(),o1);
 		
+		o1.setPayment(payment1);
+		
+		orderRepository.save(o1);
 
 	}
 	
