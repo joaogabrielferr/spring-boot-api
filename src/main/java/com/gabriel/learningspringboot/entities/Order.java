@@ -57,7 +57,16 @@ public class Order implements Serializable{
 		this.setOrderStatus(orderStatus);
 	}
 	
-	
+	public Double getTotal()
+	{
+		Double total = 0.0;
+		for(OrderItem i : items)
+		{
+			total += i.getSubTotal();
+		}
+		
+		return total;
+	}
 
 	public Long getId() {
 		return id;
