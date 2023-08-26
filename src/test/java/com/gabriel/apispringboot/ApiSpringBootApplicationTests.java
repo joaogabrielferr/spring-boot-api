@@ -1,10 +1,10 @@
-package com.gabriel.learningspringboot;
+package com.gabriel.apispringboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LearningSpringBootApplicationTests {
+class ApiSpringBootApplicationTests {
 
 	@Test
 	void contextLoads() {
