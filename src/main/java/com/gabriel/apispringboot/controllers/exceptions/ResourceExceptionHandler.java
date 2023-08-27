@@ -1,4 +1,4 @@
-package com.gabriel.apispringboot.resources.exceptions;
+package com.gabriel.apispringboot.controllers.exceptions;
 
 import java.time.Instant;
 

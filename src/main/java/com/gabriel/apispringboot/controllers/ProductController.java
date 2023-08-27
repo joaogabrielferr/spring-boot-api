@@ -1,4 +1,4 @@
-package com.gabriel.apispringboot.resources;
+package com.gabriel.apispringboot.controllers;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.gabriel.apispringboot.services.ProductService;
 
 @RestController
 @RequestMapping(value="/products")
-public class ProductResource {
+public class ProductController {
 	
 	@Autowired
 	private ProductService service;

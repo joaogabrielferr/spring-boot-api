@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.gabriel.apispringboot.entities.User;
@@ -48,6 +49,11 @@ public class UserService {
 		{
 			throw new DatabaseException(e.getMessage());
 		}
+	}
+	
+	public UserDetails findByEmail(String email)
+	{
+		return repository.findByEmail(email);
 	}
 	
 	public User update(Long id,User obj)
