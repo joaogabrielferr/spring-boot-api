@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.gabriel.apispringboot.entities.User;
 import com.gabriel.apispringboot.repository.UserRepository;
 import com.gabriel.apispringboot.services.exceptions.DatabaseException;
+import com.gabriel.apispringboot.services.exceptions.EntityAlreadyExistsException;
 import com.gabriel.apispringboot.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -34,6 +35,12 @@ public class UserService {
 	
 	public User insert(User user)
 	{
+		if(findByEmail(user.getEmail()) != null)
+		{
+			//return ResponseEntity.badRequest().body("User with email " + data.email() + " already exists.");
+			throw new EntityAlreadyExistsException("user","email",user.getEmail());
+		}
+		
 		return repository.save(user);
 	}
 	

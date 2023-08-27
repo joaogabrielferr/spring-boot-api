@@ -4,10 +4,12 @@ import java.time.Instant;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.gabriel.apispringboot.services.exceptions.DatabaseException;
+import com.gabriel.apispringboot.services.exceptions.EntityAlreadyExistsException;
 import com.gabriel.apispringboot.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,6 +40,28 @@ public class ResourceExceptionHandler {
 		StandardError standardError = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
 			
 	
+		return ResponseEntity.status(status).body(standardError);
+		
+	}
+	
+	@ExceptionHandler(EntityAlreadyExistsException.class)
+	public ResponseEntity<StandardError> entityAlreadyExists(EntityAlreadyExistsException e, HttpServletRequest request)
+	{
+		String error = "Entity already exists";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError standardError = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(standardError);
+		
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> fieldIsRequired(MethodArgumentNotValidException e, HttpServletRequest request)
+	{
+		String error = "Required fields missing";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError standardError = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+		
 		return ResponseEntity.status(status).body(standardError);
 		
 	}
