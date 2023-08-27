@@ -55,6 +55,7 @@ public class ResourceExceptionHandler {
 		
 	}
 	
+	//MethodArgumentNotValidException is thrown based on the annotations in the DTOs
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> fieldIsRequired(MethodArgumentNotValidException e, HttpServletRequest request)
 	{

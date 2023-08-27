@@ -11,36 +11,42 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gabriel.apispringboot.entities.User;
 import com.gabriel.apispringboot.entities.DTOs.AuthenticationDTO;
+import com.gabriel.apispringboot.entities.DTOs.LoginResponseDTO;
 import com.gabriel.apispringboot.entities.DTOs.RegisterDTO;
+import com.gabriel.apispringboot.infra.security.TokenService;
 import com.gabriel.apispringboot.services.UserService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value="/auth")
 @Validated
 public class AuthenticationController {
 
 	
 	@Autowired
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	private TokenService tokenService;
 	
 	@PostMapping("/login")
-	public ResponseEntity<Authentication> login(@Valid @RequestBody AuthenticationDTO data)
+	public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody AuthenticationDTO data)
 	{
 		UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
 		Authentication auth = this.authenticationManager.authenticate(usernamePassword);
 	
-		return ResponseEntity.ok().build();
+		String token = tokenService.generateToken((User)auth.getPrincipal());
+		
+		
+		return ResponseEntity.ok(new LoginResponseDTO(token));
 		
 	}
 	
