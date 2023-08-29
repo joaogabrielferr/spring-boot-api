@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.gabriel.apispringboot.services.exceptions.DatabaseException;
 import com.gabriel.apispringboot.services.exceptions.EntityAlreadyExistsException;
 import com.gabriel.apispringboot.services.exceptions.ResourceNotFoundException;
+import com.gabriel.apispringboot.services.exceptions.UnauthorizedException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -61,11 +62,33 @@ public class ResourceExceptionHandler {
 	{
 		String error = "Required fields missing";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError standardError = new StandardError(Instant.now(),status.value(),error,"Required fields missing",request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(standardError);
+		
+	}
+	
+	@ExceptionHandler(UnauthorizedException.class)
+	public ResponseEntity<StandardError> unauthorized(UnauthorizedException e, HttpServletRequest request)
+	{
+		String error = "Unauthorized";
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		StandardError standardError = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
 		
 		return ResponseEntity.status(status).body(standardError);
 		
 	}
-
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<StandardError> genericError(Exception e, HttpServletRequest request)
+	{
+		String error = "Error";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError standardError = new StandardError(Instant.now(),status.value(),error,"something went wrong",request.getRequestURI());
+		
+		return ResponseEntity.status(status).body(standardError);
+		
+	}
+	
 	
 }

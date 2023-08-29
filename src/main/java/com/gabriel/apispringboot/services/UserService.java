@@ -27,10 +27,10 @@ public class UserService {
 		return repository.findAll();
 	}
 	
-	public User findUser(Long id)
+	public User findById(Long id)
 	{
 		Optional<User> user = repository.findById(id);
-		return user.orElseThrow(()-> new ResourceNotFoundException(id));
+		return user.orElseThrow(()-> new ResourceNotFoundException("User",id));
 	}
 	
 	public User insert(User user)
@@ -51,7 +51,7 @@ public class UserService {
 			repository.deleteById(id);			
 		}catch(EntityNotFoundException e)
 		{
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("User",id);
 		}catch(DataIntegrityViolationException e)
 		{
 			throw new DatabaseException(e.getMessage());
@@ -71,7 +71,7 @@ public class UserService {
 			return repository.save(entity);			
 		}catch(EntityNotFoundException e)
 		{
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("User",id);
 		}
 	}
 
