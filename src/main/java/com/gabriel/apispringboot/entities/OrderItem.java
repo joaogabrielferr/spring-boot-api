@@ -79,12 +79,10 @@ public class OrderItem  implements Serializable {
 	}
 
 
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(id, price, quantity);
 	}
-
 
 
 	@Override
@@ -96,9 +94,13 @@ public class OrderItem  implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(id, other.id) && Objects.equals(price, other.price)
+				&& Objects.equals(quantity, other.quantity);
 	}
-	
+
+
+
+
 	
 	
 }
