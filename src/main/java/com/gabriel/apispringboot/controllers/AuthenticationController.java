@@ -20,6 +20,7 @@ import com.gabriel.apispringboot.entities.User;
 import com.gabriel.apispringboot.entities.DTOs.AuthenticationDTO;
 import com.gabriel.apispringboot.entities.DTOs.LoginResponseDTO;
 import com.gabriel.apispringboot.entities.DTOs.RegisterDTO;
+import com.gabriel.apispringboot.entities.DTOs.UserResponseDTO;
 import com.gabriel.apispringboot.infra.security.TokenService;
 import com.gabriel.apispringboot.services.UserService;
 import com.gabriel.apispringboot.services.exceptions.EntityAlreadyExistsException;
@@ -45,8 +46,9 @@ public class AuthenticationController {
 	public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody AuthenticationDTO data)
 	{
 		
-		UserDetails user = userService.findByEmail(data.email());
+		User user = userService.findByEmail(data.email());
 		
+
 		if(user == null)
 		{
 			throw new UnauthorizedException("User not found");
@@ -59,7 +61,10 @@ public class AuthenticationController {
 			
 			String token = tokenService.generateToken((User)auth.getPrincipal());
 			
-			return ResponseEntity.ok(new LoginResponseDTO(token));
+			LoginResponseDTO loginResponseDTO = new LoginResponseDTO(token, new UserResponseDTO(user.getName(),user.getEmail(),user.getPhone()));
+			
+			return ResponseEntity.ok(loginResponseDTO);
+
 						
 		}catch(BadCredentialsException e)
 		{

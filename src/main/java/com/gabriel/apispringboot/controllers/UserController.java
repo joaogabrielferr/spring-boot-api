@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gabriel.apispringboot.entities.User;
+import com.gabriel.apispringboot.entities.DTOs.UserResponseDTO;
 import com.gabriel.apispringboot.services.UserService;
 
 @RestController
@@ -36,11 +37,11 @@ public class UserController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<User> findUser(@PathVariable Long id){
+	public ResponseEntity<UserResponseDTO> findUser(@PathVariable Long id){
 		
 		User user = service.findById(id);
-		
-		return ResponseEntity.ok().body(user);
+				
+		return ResponseEntity.ok().body(new UserResponseDTO(user.getName(),user.getEmail(),user.getPhone()));
 		
 	}
 	

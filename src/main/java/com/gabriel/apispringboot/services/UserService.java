@@ -58,7 +58,7 @@ public class UserService {
 		}
 	}
 	
-	public UserDetails findByEmail(String email)
+	public User findByEmail(String email)
 	{
 		return repository.findByEmail(email);
 	}
