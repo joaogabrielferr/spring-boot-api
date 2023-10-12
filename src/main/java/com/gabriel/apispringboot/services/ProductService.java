@@ -39,10 +39,6 @@ public class ProductService {
 		Optional<Category> categoryOp = categoryRepository.findById(categoryId);
 		Category category = categoryOp.orElseThrow(()-> new ResourceNotFoundException("Category",categoryId));
 		product.getCategories().add(category);
-		return repository.save(product);			
-		
+		return repository.save(product);
 	}
-
-	
-	
 }
