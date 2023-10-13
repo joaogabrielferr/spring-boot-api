@@ -46,11 +46,11 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj)
+	public ResponseEntity<UserResponseDTO> insert(@RequestBody User obj)
 	{	
 		User user = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-		return ResponseEntity.created(uri).body(user);
+		return ResponseEntity.created(uri).body(new UserResponseDTO(user.getName(),user.getEmail(),user.getPhone()));
 	}
 	
 	@DeleteMapping("/{id}")
