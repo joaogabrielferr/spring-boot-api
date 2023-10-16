@@ -3,7 +3,9 @@ version: "3.5"
 services:
 
   api:
-    image: joaogabrielferr/api-spring-boot:0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: api-spring-boot
     environment:
       DATABASE_URL: jdbc:postgresql://db-postgres:5432/postgres_db
